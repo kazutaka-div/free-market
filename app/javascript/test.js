@@ -1,5 +1,5 @@
-$(function () {
+// $(function () {
 
-  console.log("hoge");
+//   console.log("hoge");
 
-});
+// });
