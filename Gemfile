@@ -69,3 +69,4 @@ gem 'unicorn', '5.4.1'
 gem 'recaptcha', '>= 5.4.1',  require: "recaptcha/rails"
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
+gem 'active_hash'
