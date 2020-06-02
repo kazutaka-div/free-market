@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index]
-  before_action :set_item, only: [:edit, :update, :destroy]
+  skip_before_action :authenticate_user!, only: [:index, :show]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :user_is_not_seller, only: [:edit, :update, :destroy]
 
   def index
@@ -17,6 +17,9 @@ class ItemsController < ApplicationController
        {category: mens_category, items: mens_items},
        {category: kids_category, items: kids_items}
       ]
+  end
+
+  def show
   end
 
   def new
