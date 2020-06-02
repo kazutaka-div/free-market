@@ -14,8 +14,8 @@ class Item < ApplicationRecord
 
   scope :new_items, -> { order("created_at DESC").limit(4) }
 
-  def self.search_by_categories(categories)
-    return Item.where(category: categories).includes(:images)
+  def self.search_by_categories(category_ids)
+    return Item.where(category_id: category_ids).includes(:images)
   end
 
   enum condition:{
