@@ -2,23 +2,24 @@
   .parent-categories__title
     カテゴリー一覧
   -# 大カテゴリをeachで回す
-  - ['hoge'].each do |category|
+  - Category.roots.each do |category|
     %span.parent-categories__category
-      = link_to "" do
-        大カテゴリ名
+      = link_to category_path(category) do
+        = category.name
 -# 大カテゴリをeachで回す
-- ['hoge'].each do |parent_category|
+- Category.roots.each do |parent_category|
   .categories.horizontal-padding-25
     .parent-category
-      = link_to "" do
-        大カテゴリ名
+      = link_to category_path(parent_category) do
+        = parent_category.name
     -# 中カテゴリをeachで回す
-    - ['hoge'].each do |child_category|
+    - parent_category.children.each do |child_category|
       .child-category
-        中カテゴリ名
+        = child_category.name
         .child-category__grand-child-categories
-          = link_to "", class: "child-category__grand-child-categories--category" do
+          = link_to category_path(child_category), class: "child-category__grand-child-categories--category" do
             すべて
           -# 小カテゴリをeachで回す
-          - ['hoge'].each do |grandchild_category|
-            = link_to "小カテゴリ名", "", class: "child-category__grand-child-categories--category"
+          - child_category.children.each do |grandchild_category|
+            = link_to category_path(grandchild_category), class: "child-category__grand-child-categories--category" do
+              = grandchild_category.name
