@@ -52,7 +52,7 @@
         = f.submit "完了", class:"search-form__buttons--submit button back-red"
   .search-results
     -# 検索結果があれば
-    - if false
+    - if @items.present?
       = render partial: "items/item", collection: @items, as: :item
       #pagenation
         = paginate(@items)

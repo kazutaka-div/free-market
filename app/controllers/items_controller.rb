@@ -78,6 +78,10 @@ class ItemsController < ApplicationController
     redirect_to item_path(@item), notice: "商品を購入しました"
   end
 
+  def search
+    @items = Item.search(params[:name_search]).page(params[:page])
+  end
+
   private
   def item_params
     params.require(:item).permit(
