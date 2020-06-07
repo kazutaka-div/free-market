@@ -77,3 +77,4 @@ gem 'fog-aws'
 gem 'ancestry'
 gem 'kaminari'
 gem 'payjp'
+gem "gretel"
