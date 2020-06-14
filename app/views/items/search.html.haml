@@ -48,10 +48,11 @@
       .search-checkboxes
         = f.collection_check_boxes :deal_in, {"すべて": -1}.merge(Item.deals), :second, :first
       /// 送信
-      .search-form__buttons
-        .search-form__buttons--clear.button.back-gray
-          クリア
-      = f.submit "完了", class:"search-form__buttons--submit button back-red"
+      .search-form__box
+        .search-form__buttons
+          .search-form__buttons--clear.button.back-gray.button-gray
+            クリア
+        = f.submit "完了", class:"search-form__buttons--submit button back-red button-red"
   .search-results
     -# 検索結果があれば
     - if @items.length > 0
