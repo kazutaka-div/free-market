@@ -2,7 +2,7 @@
   .header-top
     = link_to root_path do
       = image_tag 'logo.svg', class: "header-top__logo"
-    = form_with url: "", method: :get, local: true  do |f|
+    = form_with url: search_items_path, method: :get, local: true  do |f|
       = f.search_field :name, name: "name_search", placeholder: "何かお探しですか?", class: "header-top__search"
       = f.hidden_field :name, name: "q[:hoge]"
       = button_tag type: 'submit', class:"header-top__loupe" do

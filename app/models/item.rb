@@ -18,6 +18,11 @@ class Item < ApplicationRecord
     return Item.where(category_id: category_ids).includes(:images)
   end
 
+  def self.search(search)
+    return Item.all unless search
+    Item.where('name LIKE(?)', "%#{search}%")
+  end
+
   enum condition:{
     "新品、未使用": 0,
     "未使用に近い": 1,

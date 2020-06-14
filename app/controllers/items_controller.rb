@@ -78,6 +78,39 @@ class ItemsController < ApplicationController
     redirect_to item_path(@item), notice: "商品を購入しました"
   end
 
+  def search
+    # binding.pry
+    if params[:q]
+      ## params[:q]の中身があるときの処理
+      params[:q][:name_cont_any] = params[:name_search].squish.split(" ")
+
+      params[:q][:category_id_in] = [] unless params[:q][:category_id_in]
+      ## ↓ @grandchild_category_idsは孫カテゴリたちのチェック状態用
+      @grandchild_category_ids = params[:q][:category_id_in]
+      ## ↓親カテゴリが何かしら選択されたなら@parent_categoryを定義する
+      @parent_category = Category.find(params[:q][:category_id_in][0]) if params[:q][:category_id_in][0].present?
+      ## ↓子カテゴリが何かしら選択されたなら@parent_categoryを定義する
+      @child_category = Category.find(params[:q][:category_id_in][1]) if params[:q][:category_id_in][1].present?
+      ## ↓親カテゴリが選択されていて子カテゴリが「全て」の時、親カテゴリに属しているカテゴリ全てを検索対象とする
+      ## 例えば親カテゴリが「レディース」で子カテゴリが「すべて」なら「レディース」に属しているカテゴリ全てをqに入れる
+      params[:q][:category_id_in] = @parent_category.subtree_ids if params[:q][:category_id_in][1] == ""
+      ## ↓子カテゴリが選択されていて孫カテゴリが選択されていない時、子カテゴリに属しているカテゴリ全てを対象とする
+      if params[:q][:category_id_in][1].present? && params[:q][:category_id_in][2].blank?
+        params[:q][:category_id_in] = (params[:q][:category_id_in] + @child_category.subtree_ids).uniq
+      end
+    else
+      ## params[:q]の中身がないときの処理
+      params[:q] = { sorts: 'id DESC' }
+    end 
+    ## 共通の処理
+    @q = Item.ransack(params[:q])
+    @items = @q.result(distinct: true).includes(:images).page(params[:page]).per(6)
+    @categories = Category.where(ancestry: nil)
+
+    @order = [["価格が安い順", "price ASC"], ["価格が高い順", "price DESC"], ["出品が新しい順", "created_at DESC"], ["出品が古い順", "created_at ASC"]]
+    @price_list = [["300~1000", "300,1000"], ["1000~5000", "1000,5000"], ["5000~10000", "5000,10000"], ["10000~30000", "10000,30000"]]
+  end
+
   private
   def item_params
     params.require(:item).permit(

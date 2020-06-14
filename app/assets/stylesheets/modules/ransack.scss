@@ -28,6 +28,10 @@
       padding: 1rem;
       margin-top: 3rem;
 
+      &__box{
+        display:flex;
+      }
+
       &__title {
         font-weight: bold;
       }
@@ -99,4 +103,12 @@
     height: 20rem;
     margin-right: 4rem;
   }
+}
+
+.button-red{
+  margin-left:1rem;
+}
+
+.button-gray{
+  width:85px;
 }
