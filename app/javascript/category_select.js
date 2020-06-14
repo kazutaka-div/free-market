@@ -62,7 +62,7 @@ document.addEventListener('turbolinks:load', function () {
       dataType: 'json',
     })
     .done(function (categories) {
-      // if (categories.length == 0) return false;
+      if (categories.length == 0) return false;
       // changed_form.nextAll(".select-category").remove();
       // const html = buildCategoryForm(categories);
       // $(".select-category:last").after(html);
